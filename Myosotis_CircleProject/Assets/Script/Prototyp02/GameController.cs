@@ -78,19 +78,17 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-
 		if (circle.isfound){
 			NewAudios ();
 			circle.isfound = false;
 		}
 
 		int sum = star1.GetCollectedNumber () + star2.GetCollectedNumber () + star3.GetCollectedNumber () + star4.GetCollectedNumber ();
-		if (sum == 2) {
+		if (sum == 8) {
 			circleBig.SetActive (true);
 			DrawCircle ();
+			print(DateTime.Now);
 		}
-
-
 	}
 
 	void DrawCircle(){
