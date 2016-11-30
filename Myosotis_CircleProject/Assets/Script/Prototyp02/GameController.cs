@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour {
 		Color temp = circleBig.GetComponent<SpriteRenderer> ().color;
 		temp.a = 0f;
 		circleBig.GetComponent<SpriteRenderer> ().color = temp;
-
+		circleBig.SetActive (false);
 		//Sounds hinzufügen
 		audioSource = new List<AudioClip>[7];
 		for (int i = 0; i<audioSource.Length; i++){
@@ -78,10 +78,16 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		DrawCircle ();
+
 		if (circle.isfound){
 			NewAudios ();
 			circle.isfound = false;
+		}
+
+		int sum = star1.GetCollectedNumber () + star2.GetCollectedNumber () + star3.GetCollectedNumber () + star4.GetCollectedNumber ();
+		if (sum == 2) {
+			circleBig.SetActive (true);
+			DrawCircle ();
 		}
 
 

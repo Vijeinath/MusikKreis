@@ -16,7 +16,7 @@ public class Star_P02 : MonoBehaviour {
 	//Constants
 	private Vector3 startPoint = new Vector3 (0.3f, 0.3f);
 	private Vector2 strength = new Vector2 (7.0f, 7.0f);
-	private float circleRadius = 1.2f;
+	private float circleRadius = 1.4f;
 
 	private TransformGesture gesture;
 	private Rigidbody2D rb2d;
@@ -29,6 +29,7 @@ public class Star_P02 : MonoBehaviour {
 	private int degree;
 	private float scalePixel = 0.0007f;
 	private int deltaDegree = 2;
+	private int collected = 0;
 
 	// Use this for initialization
 	void Start () 
@@ -87,13 +88,13 @@ public class Star_P02 : MonoBehaviour {
 			trailParticle.Play ();
 
 		} else {
-			rb2d.drag = 2.2f;
+			rb2d.drag = 2.4f;
 			float distanceLength = this.transform.position.magnitude;
 			Vector2 objectDistance = this.transform.position - startPoint;
 
 			if ((distanceLength > circleRadius) && !isInSmallCircle)
 			{
-				rb2d.AddForce (-7 * objectDistance);
+				rb2d.AddForce (-7 * objectDistance); //Wert zwischen -2 und -7
 			
 				trailParticle.transform.position = transform.position;
 				trailParticle.Play ();
@@ -123,12 +124,18 @@ public class Star_P02 : MonoBehaviour {
 		}
 
 		if (!touchIsHappening && isCollisionOutside()){
-			collisionParticle.transform.position = this.transform.position;
-			collisionParticle.Play ();	
+			//collisionParticle.transform.position = this.transform.position;
+			//collisionParticle.Play ();	
 
 			var randomInt = UnityEngine.Random.Range(0,listOfSounds.Count);
 			//source.PlayOneShot(listOfSounds[randomInt], 1F);
 			source.PlayOneShot(clip, 1F);
+		}
+		if (other.gameObject.tag == "Collectable") {
+			other.gameObject.SetActive (false);
+			collected++;
+			source.PlayOneShot(listOfSounds[3], 1F);
+
 		}
 	}
 
@@ -180,6 +187,10 @@ public class Star_P02 : MonoBehaviour {
 		if (other.gameObject.tag == "Circle_Small") {
 			isInSmallCircle = false;
 		}
+	}
+
+	public int GetCollectedNumber(){
+		return collected;
 	}
 
 }
