@@ -3,9 +3,10 @@ using System.Collections;
 
 public class PlanetEarth : MonoBehaviour {
 	public float RotationSpeed = 30f;
-	private float degree = 0f;
+	private float degree = 60f;
 	private float degreeDelta = 0.5f;
 	private float radius = 2.5f;
+	public bool galaxyAppeared = false;
 
 	// Use this for initialization
 	void Start () {
@@ -14,9 +15,10 @@ public class PlanetEarth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.Rotate(0, 0, Time.deltaTime*RotationSpeed);
-		Orbit ();
-
+		if (galaxyAppeared) {
+			transform.Rotate(0, 0, Time.deltaTime*RotationSpeed);
+			Orbit ();
+		}	
 	}
 
 	void Orbit(){

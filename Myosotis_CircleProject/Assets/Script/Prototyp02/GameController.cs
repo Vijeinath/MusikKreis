@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
 	private Star_P02 star4;
 	private CircleSmall circle;
 	private GameObject circleBig;
+	private PlanetEarth planet;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
 	private int randomInt; 
@@ -30,6 +31,7 @@ public class GameController : MonoBehaviour {
 		star4 = GameObject.Find ("Star 04").GetComponent<Star_P02>();
 		circle = GameObject.Find ("Circle Small").GetComponent<CircleSmall>();
 		circleBig = GameObject.Find ("Circle Big");
+		planet = GameObject.Find ("Earth").GetComponent<PlanetEarth> ();
 
 		Color temp = circleBig.GetComponent<SpriteRenderer> ().color;
 		temp.a = 0f;
@@ -88,6 +90,7 @@ public class GameController : MonoBehaviour {
 			circleBig.SetActive (true);
 			DrawCircle ();
 			print(DateTime.Now);
+			planet.galaxyAppeared = true;
 		}
 	}
 
