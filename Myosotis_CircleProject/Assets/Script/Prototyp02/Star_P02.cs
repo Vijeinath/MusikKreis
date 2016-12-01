@@ -8,7 +8,6 @@ using System.Collections.Generic;
 public class Star_P02 : MonoBehaviour {
 
 	//Public Attributes
-	public ParticleSystem collisionParticle;
 	public ParticleSystem trailParticle;
 	public AudioClip sound;
 	public bool isWrongStar = false;
@@ -42,10 +41,9 @@ public class Star_P02 : MonoBehaviour {
 	}
 
 	public virtual void LoadAudioClips(List<AudioClip> listOfSounds){
-		listOfSounds.Add (Resources.Load("Sound/luteJazz") as AudioClip);
-		listOfSounds.Add (Resources.Load("Sound/classicfunk01") as AudioClip);
-		listOfSounds.Add (Resources.Load("Sound/classicfunk02") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/2cuteBells") as AudioClip);
+		listOfSounds.Add (Resources.Load("Explosion/explosion01") as AudioClip);
+		listOfSounds.Add (Resources.Load("Explosion/explosion02") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/oldStringRise") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/discoGuitar") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/harpe01") as AudioClip);
@@ -117,25 +115,26 @@ public class Star_P02 : MonoBehaviour {
 
 		if (other.gameObject.tag == "Circle_Small") {
 			isInSmallCircle = true;
+			print ("Small Circle");
 		}
 
 		if ((touchIsHappening) && !isCollisionOutside()) {
 			
 		}
-
-		if (!touchIsHappening && isCollisionOutside()){
-			//collisionParticle.transform.position = this.transform.position;
-			//collisionParticle.Play ();	
-
-			var randomInt = UnityEngine.Random.Range(0,listOfSounds.Count);
+	
+		if ((other.gameObject.tag == "Circle Big")&& !touchIsHappening && isCollisionOutside()){
+			//var randomInt = UnityEngine.Random.Range(0,listOfSounds.Count);
 			//source.PlayOneShot(listOfSounds[randomInt], 1F);
 			source.PlayOneShot(clip, 1F);
 		}
 		if (other.gameObject.tag == "Collectable") {
 			other.gameObject.SetActive (false);
 			collected++;
-			source.PlayOneShot(listOfSounds[3], 1F);
+			source.PlayOneShot(listOfSounds[0], 1F);
+		}
 
+		if (other.gameObject.tag == "Planet") {
+			source.PlayOneShot(listOfSounds[2], 1f);
 		}
 	}
 
@@ -143,27 +142,16 @@ public class Star_P02 : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Star") {
 			coll.gameObject.GetComponent<Rigidbody2D> ().angularDrag = 1.5f;
-			rb2d.angularDrag = 1.5f;
-
-			//Funtkioniert noch nicht
-			/*
-			ContactPoint2D bla = new ContactPoint2D();
-			print ("X:"+bla.point.x + "? Y: " + bla.point.y);
-			*/
-
-			//Funktioniert, aber sieht blöd aus
-			/*
-			Vector3 distance = coll.rigidbody.transform.position - this.transform.position;
-			distance =  Vector3.Scale(new Vector2(0.5f,0.5f), distance);
-			Vector3 collisionPoint = this.transform.position+distance;
-			collisionParticle.transform.position = collisionPoint;
-			collisionParticle.Play ();
-			*/
 		}
 	}
 
+	// Update is called once per frame
 	void Update(){
-		//Moves Star up and down if it is still
+		FloatUpDown ();
+	}
+
+	//Moves Star up and down if it is still or has a low velocity
+	private void FloatUpDown(){
 		float length = rb2d.velocity.magnitude;
 		if ((length <0.1f) &&(length>-0.1f)) {
 			float bla = Mathf.Sin (degree * Mathf.PI / 180) * scalePixel;
@@ -176,6 +164,7 @@ public class Star_P02 : MonoBehaviour {
 	bool isCollisionOutside(){
 		return this.transform.position.magnitude > circleRadius;
 	}
+
 
 	//
 	void OnCollisionExit2D(Collision2D coll) {

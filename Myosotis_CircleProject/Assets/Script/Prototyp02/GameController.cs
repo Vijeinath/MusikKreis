@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour {
 	private List<AudioClip> listOfSounds;
 	private int randomInt; 
 
+	private DateTime d1;
+
 	private int degree = 0;
 	private int degreeDelta = 14;
 	private float radius = 1.3f;
@@ -80,16 +82,17 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (circle.isfound){
+		if (planet.hitByStar){
 			NewAudios ();
-			circle.isfound = false;
+			planet.hitByStar = false;
 		}
 
 		int sum = star1.GetCollectedNumber () + star2.GetCollectedNumber () + star3.GetCollectedNumber () + star4.GetCollectedNumber ();
 		if (sum == 8) {
 			circleBig.SetActive (true);
 			DrawCircle ();
-			print(DateTime.Now);
+			d1 = DateTime.Now;
+			TimeSpan d3 = DateTime.Now - d1;
 			planet.galaxyAppeared = true;
 		}
 	}
