@@ -15,9 +15,11 @@ public class GameController : MonoBehaviour {
 	private PlanetEarth planet;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
-	private int randomInt; 
+	private int randomInt;
+	private readonly int numberOfCollactables = 8;
 
-	private DateTime d1;
+	private DateTime startTime;
+	private bool galaxyStarted = false;
 
 	private int degree = 0;
 	private int degreeDelta = 14;
@@ -79,27 +81,47 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		
 		if (planet.hitByStar){
-			NewAudios ();
+			LoadNewSounds ();
 			planet.hitByStar = false;
 		}
 
+		if (circlePs.IsAlive()) {
+			print ("is alive");
+		}
+
+		DrawGalaxy ();
 		int sum = star1.GetCollectedNumber () + star2.GetCollectedNumber () + star3.GetCollectedNumber () + star4.GetCollectedNumber ();
-		if (sum == 8) {
+		if (sum == numberOfCollactables) {
+			if (!galaxyStarted) {
+				startTime = DateTime.Now;
+			}
+			galaxyStarted = true;
 			circleBig.SetActive (true);
-			DrawCircle ();
-			d1 = DateTime.Now;
-			TimeSpan d3 = DateTime.Now - d1;
 			planet.galaxyAppeared = true;
+			circlePs.Play ();
+			if (galaxyStarted) {
+				TimeSpan durationGalaxy = DateTime.Now - startTime;
+				if (durationGalaxy.Seconds > 5) {
+					star1.ResetCollected ();
+					star2.ResetCollected ();
+					star3.ResetCollected ();
+					star4.ResetCollected ();
+					galaxyStarted = false;
+					planet.galaxyAppeared = false;
+					circleBig.SetActive (false);
+					circlePs.Stop(true);
+				}
+			}
+
 		}
 	}
 
-	void DrawCircle(){
+	void DrawGalaxy(){
 		circlePs.transform.position = new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius);
-		circlePs.Play ();
 		degree = (degree + degreeDelta) %360;
 	}
 
-	public void NewAudios (){
+	public void LoadNewSounds (){
 		var tempRandom = UnityEngine.Random.Range(0,7);
 		while (tempRandom == randomInt) {
 			tempRandom = UnityEngine.Random.Range(0,7);

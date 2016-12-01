@@ -21,7 +21,6 @@ public class Star_P02 : MonoBehaviour {
 	public AudioClip clip;
 	private List<AudioClip> listOfSounds;
 	private bool touchIsHappening = false;
-	private bool isInSmallCircle = false;
 
 	private int degree;
 	private float scalePixel = 0.0007f;
@@ -86,7 +85,7 @@ public class Star_P02 : MonoBehaviour {
 			float distanceLength = this.transform.position.magnitude;
 			Vector2 objectDistance = this.transform.position - startPoint;
 
-			if ((distanceLength > circleRadius) && !isInSmallCircle)
+			if (distanceLength > circleRadius)
 			{
 				rb2d.AddForce (-7 * objectDistance); //Wert zwischen -2 und -7
 			
@@ -108,11 +107,6 @@ public class Star_P02 : MonoBehaviour {
 
 	//Partikel- und Soundstart nur nach Kreiseintritt
 	void OnTriggerEnter2D(Collider2D other) {
-
-		if (other.gameObject.tag == "Circle_Small") {
-			isInSmallCircle = true;
-			print ("Small Circle");
-		}
 
 		if ((touchIsHappening) && !isCollisionOutside()) {
 			
@@ -160,16 +154,13 @@ public class Star_P02 : MonoBehaviour {
 	bool isCollisionOutside(){
 		return this.transform.position.magnitude > circleRadius;
 	}
-		
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.gameObject.tag == "Circle_Small") {
-			isInSmallCircle = false;
-		}
-	}
 
 	public int GetCollectedNumber(){
 		return collected;
+	}
+
+	public void ResetCollected(){
+		collected = 0;
 	}
 
 }
