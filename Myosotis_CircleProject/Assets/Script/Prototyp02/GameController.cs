@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 	public ParticleSystem circlePs;
+	public GameObject prefabCollectable;
 
 	private List<AudioClip>[] audioSource;
 	private Star_P02 star1;
@@ -15,8 +16,9 @@ public class GameController : MonoBehaviour {
 	private PlanetEarth planet;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
+	private List<GameObject> collectables;
 	private int randomInt;
-	private readonly int numberOfCollactables = 8;
+	private readonly int numberOfCollactables = 1;
 
 	private DateTime startTime;
 	private bool galaxyStarted = false;
@@ -39,6 +41,7 @@ public class GameController : MonoBehaviour {
 		temp.a = 0f;
 		circleBig.GetComponent<SpriteRenderer> ().color = temp;
 		circleBig.SetActive (false);
+
 		//Sounds hinzufügen
 		audioSource = new List<AudioClip>[7];
 		for (int i = 0; i<audioSource.Length; i++){
@@ -72,6 +75,12 @@ public class GameController : MonoBehaviour {
 		star3.clip = audioSource [0] [2];
 		star4.clip = audioSource [4] [2];
 
+		collectables = new List<GameObject> ();
+		for (int i = 0; i < 8; i++) {
+			collectables.Add(Instantiate(prefabCollectable) as GameObject);
+			collectables [i].transform.position= new Vector2(0.1f*i,0.2f*i);
+		}	
+
 		//Zum Testen
 		//source = GetComponent<AudioSource> ();
 		//source.PlayOneShot(audioSource[6][1], 1F);
@@ -85,8 +94,9 @@ public class GameController : MonoBehaviour {
 			planet.hitByStar = false;
 		}
 
-		if (circlePs.IsAlive()) {
-			print ("is alive");
+		if (!circlePs.IsAlive()) {
+			//Randomize Collectables Positions
+
 		}
 
 		DrawGalaxy ();
