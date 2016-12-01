@@ -65,12 +65,10 @@ public class GameController : MonoBehaviour {
 		audioSource[6].Add (Resources.Load("Xylophone/xylophone01") as AudioClip);
 		audioSource[6].Add (Resources.Load("Xylophone/xylophone01") as AudioClip);
 
-
 		star1.clip = audioSource [0] [1];
 		star2.clip = audioSource [0] [0];
 		star3.clip = audioSource [0] [2];
 		star4.clip = audioSource [4] [2];
-		star4.isWrongStar = true;
 
 		//Zum Testen
 		//source = GetComponent<AudioSource> ();
@@ -114,70 +112,42 @@ public class GameController : MonoBehaviour {
 			star2.clip = audioSource [0] [2];
 			star3.clip = audioSource [3] [0];
 			star4.clip = audioSource [3] [1];
-			star4.isWrongStar = false;
-			star1.isWrongStar = false;
-			star2.isWrongStar = true;
-			star3.isWrongStar = false;
 			break;
 		case 1:
 			star1.clip = audioSource [6] [1];
 			star2.clip = audioSource [1] [2];
 			star3.clip = audioSource [1] [0];
 			star4.clip = audioSource [1] [1];
-			star4.isWrongStar = false;
-			star1.isWrongStar = true;
-			star2.isWrongStar = false;
-			star3.isWrongStar = false;
 			break;
 		case 2:
 			star1.clip = audioSource [6] [1];
 			star2.clip = audioSource [6] [2];
 			star3.clip = audioSource [2] [0];
 			star4.clip = audioSource [6] [0];
-			star4.isWrongStar = false;
-			star1.isWrongStar = false;
-			star2.isWrongStar = false;
-			star3.isWrongStar = true;
 			break;
 		case 3:
 			star1.clip = audioSource [0] [1];
 			star2.clip = audioSource [0] [0];
 			star3.clip = audioSource [0] [2];
 			star4.clip = audioSource [4] [2];
-			star4.isWrongStar = true;
-			star1.isWrongStar = false;
-			star2.isWrongStar = false;
-			star3.isWrongStar = false;
 			break;
 		case 4:
 			star1.clip = audioSource [3] [1];
 			star2.clip = audioSource [2] [2];
 			star3.clip = audioSource [2] [0];
 			star4.clip = audioSource [2] [1];
-			star4.isWrongStar = false;
-			star1.isWrongStar = true;
-			star2.isWrongStar = false;
-			star3.isWrongStar = false;
 			break;
 		case 5:
 			star1.clip = audioSource [5] [1];
 			star2.clip = audioSource [5] [2];
 			star3.clip = audioSource [5] [0];
 			star4.clip = audioSource [1] [1];
-			star4.isWrongStar = true;
-			star1.isWrongStar = false;
-			star2.isWrongStar = false;
-			star3.isWrongStar = false;
 			break;
 		case 6:
 			star1.clip = audioSource [4] [1];
 			star2.clip = audioSource [4] [2];
 			star3.clip = audioSource [0] [0];
 			star4.clip = audioSource [4] [0];
-			star4.isWrongStar = false;
-			star1.isWrongStar = false;
-			star2.isWrongStar = false;
-			star3.isWrongStar = true;
 			break;
 		default:
 			break;		

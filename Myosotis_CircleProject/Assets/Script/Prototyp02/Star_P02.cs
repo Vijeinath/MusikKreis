@@ -10,7 +10,6 @@ public class Star_P02 : MonoBehaviour {
 	//Public Attributes
 	public ParticleSystem trailParticle;
 	public AudioClip sound;
-	public bool isWrongStar = false;
 
 	//Constants
 	private Vector3 startPoint = new Vector3 (0.3f, 0.3f);
