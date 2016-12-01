@@ -14,7 +14,6 @@ public class Star_P02 : MonoBehaviour {
 
 	//Constants
 	private Vector3 startPoint = new Vector3 (0.3f, 0.3f);
-	private Vector2 strength = new Vector2 (7.0f, 7.0f);
 	private float circleRadius = 1.4f;
 
 	private TransformGesture gesture;
@@ -45,10 +44,8 @@ public class Star_P02 : MonoBehaviour {
 		listOfSounds.Add (Resources.Load("Explosion/explosion01") as AudioClip);
 		listOfSounds.Add (Resources.Load("Explosion/explosion02") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/oldStringRise") as AudioClip);
-		listOfSounds.Add (Resources.Load("Sound/discoGuitar") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/harpe01") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/harpe02") as AudioClip);
-		listOfSounds.Add (Resources.Load("Sound/cavaleria") as AudioClip);
 	}
 
 	private void OnEnable()
@@ -164,13 +161,7 @@ public class Star_P02 : MonoBehaviour {
 	bool isCollisionOutside(){
 		return this.transform.position.magnitude > circleRadius;
 	}
-
-
-	//
-	void OnCollisionExit2D(Collision2D coll) {
 		
-	}
-
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "Circle_Small") {

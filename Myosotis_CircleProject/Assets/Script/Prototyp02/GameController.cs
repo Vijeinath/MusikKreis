@@ -11,7 +11,6 @@ public class GameController : MonoBehaviour {
 	private Star_P02 star2;
 	private Star_P02 star3;
 	private Star_P02 star4;
-	private CircleSmall circle;
 	private GameObject circleBig;
 	private PlanetEarth planet;
 	private AudioSource source;
@@ -31,7 +30,6 @@ public class GameController : MonoBehaviour {
 		star2 = GameObject.Find ("Star 02").GetComponent<Star_P02>();
 		star3 = GameObject.Find ("Star 03").GetComponent<Star_P02>();
 		star4 = GameObject.Find ("Star 04").GetComponent<Star_P02>();
-		circle = GameObject.Find ("Circle Small").GetComponent<CircleSmall>();
 		circleBig = GameObject.Find ("Circle Big");
 		planet = GameObject.Find ("Earth").GetComponent<PlanetEarth> ();
 
