@@ -10,6 +10,7 @@ public class Star_P02 : MonoBehaviour {
 	//Public Attributes
 	public ParticleSystem trailParticle;
 	public AudioClip sound;
+	public bool galaxyAppeared = false;
 
 	//Constants
 	private Vector3 startPoint = new Vector3 (0.3f, 0.3f);
@@ -20,7 +21,7 @@ public class Star_P02 : MonoBehaviour {
 	private AudioSource source;
 	public AudioClip clip;
 	private List<AudioClip> listOfSounds;
-	private bool touchIsHappening = false;
+	public bool touchIsHappening = false;
 
 	private int degree;
 	private float scalePixel = 0.0007f;
@@ -85,10 +86,10 @@ public class Star_P02 : MonoBehaviour {
 			float distanceLength = this.transform.position.magnitude;
 			Vector2 objectDistance = this.transform.position - startPoint;
 
-			if (distanceLength > circleRadius)
+			if ((distanceLength > circleRadius) && galaxyAppeared)
 			{
 				rb2d.AddForce (-7 * objectDistance); //Wert zwischen -2 und -7
-			
+
 				trailParticle.transform.position = transform.position;
 				trailParticle.Play ();
 			} /*else if ((distanceLength < circleRadius) && (isMoving)){
@@ -100,11 +101,7 @@ public class Star_P02 : MonoBehaviour {
 		}
 
 	}
-
-	public void AForce(Vector2 v2){
-		rb2d.AddForce (-7 * v2);
-	}
-
+		
 	//Partikel- und Soundstart nur nach Kreiseintritt
 	void OnTriggerEnter2D(Collider2D other) {
 
@@ -151,7 +148,7 @@ public class Star_P02 : MonoBehaviour {
 		}
 	}
 
-	bool isCollisionOutside(){
+	public bool isCollisionOutside(){
 		return this.transform.position.magnitude > circleRadius;
 	}
 
