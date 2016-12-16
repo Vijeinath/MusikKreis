@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 	public ParticleSystem circlePs;
+	public ParticleSystem createCollectable;
 	public GameObject prefabCollectable;
 
 	private List<AudioClip>[] audioSource;
@@ -78,7 +79,7 @@ public class GameController : MonoBehaviour {
 			collectables.Add(Instantiate(prefabCollectable) as GameObject); 
 		}	
 		NewPositionCollectable ();
-
+		StartCoroutine(AppearCollectables ());
 		//Zum Testen
 		//source = GetComponent<AudioSource> ();
 		//source.PlayOneShot(audioSource[6][1], 1F);
@@ -86,15 +87,32 @@ public class GameController : MonoBehaviour {
 
 	private void NewPositionCollectable(){
 		for (int i = 0; i < numberOfCollactables; i++) {
-			Vector2 tempVector = new Vector2(UnityEngine.Random.Range(-3.0f,3.0f),UnityEngine.Random.Range(-1.5f,1.5f));
-			while (((tempVector.magnitude - star1.transform.position.magnitude) < 0.4) && 
-				((tempVector.magnitude - star2.transform.position.magnitude) < 0.4) &&
-				((tempVector.magnitude - star3.transform.position.magnitude) < 0.4) &&
-				((tempVector.magnitude - star4.transform.position.magnitude) < 0.4)){
-				tempVector = new Vector2(UnityEngine.Random.Range(-3.0f,3.0f),UnityEngine.Random.Range(-1.5f,1.5f));
+			Vector2 tempVector = new Vector2(UnityEngine.Random.Range(-2.8f,2.8f),UnityEngine.Random.Range(-1.4f,1.4f));
+			while ((Mathf.Abs((tempVector.magnitude - star1.transform.position.magnitude)) < 0.3) || 
+				(Mathf.Abs((tempVector.magnitude - star2.transform.position.magnitude)) < 0.3) ||
+				(Mathf.Abs((tempVector.magnitude - star3.transform.position.magnitude)) < 0.3) ||
+				(Mathf.Abs((tempVector.magnitude - star4.transform.position.magnitude)) < 0.3)){
+				tempVector = new Vector2(UnityEngine.Random.Range(-2.8f,2.8f),UnityEngine.Random.Range(-1.4f,1.4f));
 			}
-			collectables [i].transform.position= tempVector;
+			//print ("star1:" + Mathf.Abs((tempVector.magnitude - star1.transform.position.magnitude)));
+			//print ("star2:" + Mathf.Abs((tempVector.magnitude - star2.transform.position.magnitude)));
+			//print ("star3:" + Mathf.Abs((tempVector.magnitude - star3.transform.position.magnitude)));
+			//print ("star4:" + Mathf.Abs((tempVector.magnitude - star4.transform.position.magnitude)));
+			//print (tempVector.magnitude);
+			collectables [i].transform.position = tempVector;
+			collectables [i].SetActive (false);
+		}
+	}
+
+	private IEnumerator AppearCollectables(){
+		for (int i = 0; i < numberOfCollactables; i++) {
+			
+			createCollectable.transform.position = collectables [i].transform.position;
+			createCollectable.Play ();
 			collectables [i].SetActive (true);
+			yield return new WaitWhile(()=> createCollectable.isPlaying);
+			//yield return new WaitForSeconds(0.1F);
+			print ("fertig");
 		}
 	}
 
@@ -122,6 +140,7 @@ public class GameController : MonoBehaviour {
 		if (!circlePs.IsAlive() && galaxyJustStopped) {
 			//Randomize Collectables Positions
 			NewPositionCollectable();
+			StartCoroutine(AppearCollectables ());
 			galaxyJustStopped = false;
 		}
 

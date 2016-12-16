@@ -85,6 +85,7 @@ public class Star_P02 : MonoBehaviour {
 			rb2d.drag = 2.4f;
 			float distanceLength = this.transform.position.magnitude;
 			Vector2 objectDistance = this.transform.position - startPoint;
+			trailParticle.Stop ();
 
 			if ((distanceLength > circleRadius) && galaxyAppeared)
 			{
