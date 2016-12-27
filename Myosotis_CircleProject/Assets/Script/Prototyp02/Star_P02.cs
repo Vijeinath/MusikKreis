@@ -40,7 +40,7 @@ public class Star_P02 : MonoBehaviour {
 
 	public virtual void LoadAudioClips(List<AudioClip> listOfSounds){
 		listOfSounds.Add (Resources.Load("Sound/2cuteBells") as AudioClip);
-		listOfSounds.Add (Resources.Load("Explosion/explosion01") as AudioClip);
+		listOfSounds.Add (Resources.Load("Sound/belltree2") as AudioClip);
 		listOfSounds.Add (Resources.Load("Explosion/explosion02") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/oldStringRise") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/harpe01") as AudioClip);
@@ -122,7 +122,7 @@ public class Star_P02 : MonoBehaviour {
 		}
 
 		if (other.gameObject.tag == "Planet") {
-			source.PlayOneShot(listOfSounds[2], 1f);
+			source.PlayOneShot(listOfSounds[1], 1f);
 		}
 	}
 
