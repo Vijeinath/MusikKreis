@@ -4,17 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
-	public ParticleSystem circlePs;
+	public ParticleSystem galaxyParticle;
 	public ParticleSystem createCollectable;
 	public GameObject prefabCollectable;
+	public Star star1;
+	public Star star2;
+	public Star star3;
+	public Star star4;
+	public Planet planet;
 
 	private List<AudioClip>[] audioSource;
-	private Star star1;
-	private Star star2;
-	private Star star3;
-	private Star star4;
 	private GameObject galaxyCollider;
-	private Planet planet;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
@@ -36,22 +36,11 @@ public class GameController : MonoBehaviour {
 	private int trumpet = 5;
 	private int xylophone = 6;
 
-
 	// Use this for initialization
 	void Start () {
-		//Stars referenzieren
-		star1 = GameObject.Find ("Star 01").GetComponent<Star>();
-		star2 = GameObject.Find ("Star 02").GetComponent<Star>();
-		star3 = GameObject.Find ("Star 03").GetComponent<Star>();
-		star4 = GameObject.Find ("Star 04").GetComponent<Star>();
 		galaxyCollider = GameObject.Find ("Galaxy Collider");
-		planet = GameObject.Find ("Planet").GetComponent<Planet> ();
 
-		Color temp = galaxyCollider.GetComponent<SpriteRenderer> ().color;
-		temp.a = 0f;
-		galaxyCollider.GetComponent<SpriteRenderer> ().color = temp;
-		galaxyCollider.SetActive (false);
-
+		DeactivateGalaxy ();
 		LoadSoundFiles ();
 		ShuffleStarMusic ();
 
@@ -60,11 +49,18 @@ public class GameController : MonoBehaviour {
 			collectables.Add(Instantiate(prefabCollectable) as GameObject); 
 		}	
 		PositionCollectables ();
-		StartCoroutine(AppearCollectables ());
+		StartCoroutine(ShowCollectables ());
 		//Zum Testen
 		//source = GetComponent<AudioSource> ();
 		//source.PlayOneShot(audioSource[6][1], 1F);
 	}
+
+	private void DeactivateGalaxy(){
+		Color temp = galaxyCollider.GetComponent<SpriteRenderer> ().color;
+		temp.a = 0f;
+		galaxyCollider.GetComponent<SpriteRenderer> ().color = temp;
+		galaxyCollider.SetActive (false);
+	}	
 
 	private void LoadSoundFiles(){
 		audioSource = new List<AudioClip>[7];
@@ -121,9 +117,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private IEnumerator AppearCollectables(){
+	private IEnumerator ShowCollectables(){
 		for (int i = 0; i < numberOfCollactables; i++) {
-			
 			createCollectable.transform.position = collectables [i].transform.position;
 			createCollectable.Play ();
 			collectables [i].SetActive (true);
@@ -133,31 +128,24 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private void ChangeSprite(string fileName){
-		string color; 
-		if (fileName.Split('_') [1].Equals ("orange")) {
-			color = "white";
-		} else {
-			color = "orange";
-		}
-		star1.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_01");
-		star2.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_02");
-		star3.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_03");
-		star4.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_04");
+	private void ChangeStarColor(){
+		star1.ChangeColor ();
+		star2.ChangeColor ();
+		star3.ChangeColor ();
+		star4.ChangeColor ();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (planet.hitByStar){
-			ChangeSprite(star1.GetComponent<SpriteRenderer>().sprite.name);
+			ChangeStarColor();
 			ShuffleStarMusic ();
 			planet.hitByStar = false;
 		}
 
-		if (!circlePs.IsAlive() && galaxyJustStopped) {
-			//Randomize Collectables Positions
+		if (!galaxyParticle.IsAlive() && galaxyJustStopped) {
 			PositionCollectables();
-			StartCoroutine(AppearCollectables ());
+			StartCoroutine(ShowCollectables ());
 			galaxyJustStopped = false;
 		}
 
@@ -168,7 +156,7 @@ public class GameController : MonoBehaviour {
 				startTime = DateTime.Now;
 			}
 				
-			circlePs.Play ();
+			galaxyParticle.Play ();
 			planet.galaxyAppeared = true;
 			star1.galaxyAppeared = true;
 			star2.galaxyAppeared = true;
@@ -194,17 +182,16 @@ public class GameController : MonoBehaviour {
 					star3.galaxyAppeared = false;
 					star4.galaxyAppeared = false;
 					galaxyCollider.SetActive (false);
-					circlePs.Stop(true);
+					galaxyParticle.Stop(true);
 					galaxyJustStopped = true;
 					planet.rounds = 0;
 				}
 			}
-
 		}
 	}
 
 	void DrawGalaxy(){
-		circlePs.transform.position = new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius);
+		galaxyParticle.transform.position = new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius);
 		degree = (degree + degreeDelta) %360;
 	}
 
@@ -274,6 +261,5 @@ public class GameController : MonoBehaviour {
 			break;		
 		}
 	}
-
-
+		
 }

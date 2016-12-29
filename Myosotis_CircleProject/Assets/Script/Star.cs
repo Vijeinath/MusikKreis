@@ -110,7 +110,7 @@ public class Star: MonoBehaviour {
 			
 		}
 	
-		if ((other.gameObject.tag == "Circle Big")&& !touchIsHappening && isCollisionOutside()){
+		if ((other.gameObject.tag == "Galaxy Collider")&& !touchIsHappening && isCollisionOutside()){
 			//var randomInt = UnityEngine.Random.Range(0,listOfSounds.Count);
 			//source.PlayOneShot(listOfSounds[randomInt], 1F);
 			source.PlayOneShot(clip, 1F);
@@ -159,6 +159,17 @@ public class Star: MonoBehaviour {
 
 	public void ResetCollected(){
 		collected = 0;
+	}
+
+	public void ChangeColor(){
+		string spriteName = GetComponent<SpriteRenderer> ().sprite.name;
+		string color; 
+		if (spriteName.Split('_') [1].Equals ("orange")) {
+			color = "white";
+		} else {
+			color = "orange";
+		}
+		GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_"+spriteName.Split('_') [2]);
 	}
 
 }
