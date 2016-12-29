@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
-	public ParticleSystem galaxyParticle;
 	public ParticleSystem createCollectable;
 	public GameObject prefabCollectable;
 	public Star star1;
@@ -12,9 +11,9 @@ public class GameController : MonoBehaviour {
 	public Star star3;
 	public Star star4;
 	public Planet planet;
+	public Galaxy galaxy;
 
 	private List<AudioClip>[] audioSource;
-	private GameObject galaxyCollider;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
@@ -38,8 +37,6 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		galaxyCollider = GameObject.Find ("Galaxy");
-
 		DeactivateGalaxy ();
 		LoadSoundFiles ();
 		ShuffleStarMusic ();
@@ -56,10 +53,10 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void DeactivateGalaxy(){
-		Color temp = galaxyCollider.GetComponent<SpriteRenderer> ().color;
+		Color temp = galaxy.GetComponent<SpriteRenderer> ().color;
 		temp.a = 0f;
-		galaxyCollider.GetComponent<SpriteRenderer> ().color = temp;
-		galaxyCollider.SetActive (false);
+		galaxy.GetComponent<SpriteRenderer> ().color = temp;
+		galaxy.SetActive (false);
 	}	
 
 	private void LoadSoundFiles(){
@@ -143,7 +140,7 @@ public class GameController : MonoBehaviour {
 			planet.hitByStar = false;
 		}
 
-		if (!galaxyParticle.IsAlive() && galaxyJustStopped) {
+		if (!galaxy.IsAlive() && galaxyJustStopped) {
 			PositionCollectables();
 			StartCoroutine(ShowCollectables ());
 			galaxyJustStopped = false;
@@ -156,7 +153,7 @@ public class GameController : MonoBehaviour {
 				startTime = DateTime.Now;
 			}
 				
-			galaxyParticle.Play ();
+			galaxy.Play ();
 			planet.galaxyAppeared = true;
 			star1.galaxyAppeared = true;
 			star2.galaxyAppeared = true;
@@ -166,11 +163,11 @@ public class GameController : MonoBehaviour {
 
 
 			if ((!star1.isCollisionOutside()|| star1.touchIsHappening) && (!star2.isCollisionOutside() || star2.touchIsHappening) && (!star3.isCollisionOutside()||star3.touchIsHappening) && (!star4.isCollisionOutside()||star4.touchIsHappening)) {
-				galaxyCollider.SetActive (true);
+				galaxy.SetActive (true);
 			}
 			if (galaxyStarted) {
 				TimeSpan durationGalaxy = DateTime.Now - startTime;
-				if (/*durationGalaxy.Seconds > 30*/ planet.rounds == 2) {
+				if (/*durationGalaxy.Seconds > 30*/ planet.rounds == 1) {
 					star1.ResetCollected ();
 					star2.ResetCollected ();
 					star3.ResetCollected ();
@@ -181,8 +178,8 @@ public class GameController : MonoBehaviour {
 					star2.galaxyAppeared = false;
 					star3.galaxyAppeared = false;
 					star4.galaxyAppeared = false;
-					galaxyCollider.SetActive (false);
-					galaxyParticle.Stop(true);
+					galaxy.SetActive (false);
+					galaxy.Stop();
 					galaxyJustStopped = true;
 					planet.rounds = 0;
 				}
@@ -191,7 +188,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void DrawGalaxy(){
-		galaxyParticle.transform.position = new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius);
+		galaxy.SetPosition(new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius));
 		degree = (degree + degreeDelta) %360;
 	}
 
@@ -261,5 +258,5 @@ public class GameController : MonoBehaviour {
 			break;		
 		}
 	}
-		
+
 }

@@ -6,7 +6,6 @@ public class Galaxy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
 	}
 
 	// Update is called once per frame
@@ -14,11 +13,11 @@ public class Galaxy : MonoBehaviour {
 
 	}
 
-	public void Appear(){
+	public void Play(){
 		galaxyParticle.Play ();
 	}
 
-	public void Disappear(){
+	public void Stop(){
 		galaxyParticle.Stop (true);
 	}
 
@@ -27,6 +26,10 @@ public class Galaxy : MonoBehaviour {
 	}
 
 	public void SetPosition(Vector2 newPosition){
-		this.transform.position = newPosition;
-	}    
+		galaxyParticle.transform.position = newPosition;
+	}
+
+	public void SetActive(bool active){
+		this.gameObject.SetActive (active);
+	}
 } 
