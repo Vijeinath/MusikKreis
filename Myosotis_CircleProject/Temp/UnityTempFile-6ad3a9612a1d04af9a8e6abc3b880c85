@@ -86,11 +86,12 @@
 -define:UNITY_EDITOR_64
 -define:UNITY_EDITOR_OSX
 -define:UNITY_TEAM_LICENSE
+'Assets/Galaxy.cs'
 'Assets/Particle Ribbon/Scripts/ReverseNormals.cs'
 'Assets/Script/CodeZousanne/TouchCode.cs'
 'Assets/Script/GameController.cs'
-'Assets/Script/Prototyp02/PlanetEarth.cs'
-'Assets/Script/Star_P02.cs'
+'Assets/Script/Planet.cs'
+'Assets/Script/Star.cs'
 'Assets/TouchScript/Examples/Camera/Scripts/CameraController.cs'
 'Assets/TouchScript/Examples/Checkers/Scripts/Board.cs'
 'Assets/TouchScript/Examples/Checkers/Scripts/Exclusive.cs'

@@ -110,7 +110,7 @@ public class Star: MonoBehaviour {
 			
 		}
 	
-		if ((other.gameObject.tag == "Galaxy Collider")&& !touchIsHappening && isCollisionOutside()){
+		if ((other.gameObject.tag == "Galaxy")&& !touchIsHappening && isCollisionOutside()){
 			//var randomInt = UnityEngine.Random.Range(0,listOfSounds.Count);
 			//source.PlayOneShot(listOfSounds[randomInt], 1F);
 			source.PlayOneShot(clip, 1F);

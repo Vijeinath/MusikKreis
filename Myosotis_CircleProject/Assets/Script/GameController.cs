@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		galaxyCollider = GameObject.Find ("Galaxy Collider");
+		galaxyCollider = GameObject.Find ("Galaxy");
 
 		DeactivateGalaxy ();
 		LoadSoundFiles ();

@@ -88,9 +88,10 @@
 -define:UNITY_TEAM_LICENSE
 'Assets/Particle Ribbon/Scripts/ReverseNormals.cs'
 'Assets/Script/CodeZousanne/TouchCode.cs'
-'Assets/Script/Prototyp02/GameController.cs'
-'Assets/Script/Prototyp02/PlanetEarth.cs'
-'Assets/Script/Star_P02.cs'
+'Assets/Script/Galaxy.cs'
+'Assets/Script/GameController.cs'
+'Assets/Script/Planet.cs'
+'Assets/Script/Star.cs'
 'Assets/TouchScript/Examples/Camera/Scripts/CameraController.cs'
 'Assets/TouchScript/Examples/Checkers/Scripts/Board.cs'
 'Assets/TouchScript/Examples/Checkers/Scripts/Exclusive.cs'
