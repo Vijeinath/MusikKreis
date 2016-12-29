@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Galaxy : MonoBehaviour {
+	// Public attribute
 	public ParticleSystem galaxyParticle;
 
 	// Use this for initialization
@@ -10,7 +11,6 @@ public class Galaxy : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
 	}
 
 	public void Play(){

@@ -3,7 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * This class manages the two minigames and coordinates between the other objects like the stars, planet, galaxy and collectables.
+*/
 public class GameController : MonoBehaviour {
+	// Public attributes
 	public ParticleSystem createCollectable;
 	public GameObject prefabCollectable;
 	public Star star1;
@@ -15,19 +19,19 @@ public class GameController : MonoBehaviour {
 	public int planetCycle;
 	public int numberOfCollactables;
 
+	// Private attributes
 	private List<AudioClip>[] audioSource;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
 	private int randomInt = -1;
-
 	private DateTime startTime;
 	private bool galaxyStarted = false;
 	private bool galaxyJustStopped = false;
-
 	private int degree = 0;
 	private int degreeDelta = 14;
 	private float radius = 1.3f;
+	// Instrument variables for the array
 	private int flute = 0;
 	private int guitar = 1;
 	private int harpe = 2;
@@ -36,7 +40,7 @@ public class GameController : MonoBehaviour {
 	private int trumpet = 5;
 	private int xylophone = 6;
 
-	// Use this for initialization
+	// Initialization
 	void Start () {
 		DeactivateGalaxy ();
 		LoadSoundFiles ();
@@ -48,11 +52,8 @@ public class GameController : MonoBehaviour {
 		}	
 		PositionCollectables ();
 		StartCoroutine(ShowCollectables ());
-		//Zum Testen
-		//source = GetComponent<AudioSource> ();
-		//source.PlayOneShot(audioSource[6][1], 1F);
 	}
-
+		
 	private void DeactivateGalaxy(){
 		Color temp = galaxy.GetComponent<SpriteRenderer> ().color;
 		temp.a = 0f;

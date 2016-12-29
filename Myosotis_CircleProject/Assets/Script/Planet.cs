@@ -6,14 +6,17 @@ using System;
 using System.Collections.Generic;
 
 public class Planet: MonoBehaviour {
+	//Public attributes
 	public float RotationSpeed = 20f;
+	public bool galaxyAppeared = false;
+	public bool hitByStar = false;
+	public int rounds = 0;
+
+	//Private attributes
 	private float degree = 90f;
 	private float degreeDelta = 0.25f;
 	private float radius = 2.5f;
 	private TransformGesture gesture;
-	public bool galaxyAppeared = false;
-	public bool hitByStar = false;
-	public int rounds = 0;
 	private bool touchIsHappening = false;
 	private Sprite[] planetSprites;
 

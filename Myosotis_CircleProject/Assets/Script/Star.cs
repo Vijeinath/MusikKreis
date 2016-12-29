@@ -6,29 +6,26 @@ using System;
 using System.Collections.Generic;
 
 public class Star: MonoBehaviour {
-
-	//Public Attributes
+	//Public attributes
 	public ParticleSystem trailParticle;
 	public AudioClip sound;
 	public bool galaxyAppeared = false;
+	public AudioClip clip;
 
-	//Constants
+	//Private attributes
 	private Vector3 startPoint = new Vector3 (0.3f, 0.3f);
 	private float circleRadius = 1.4f;
-
 	private TransformGesture gesture;
 	private Rigidbody2D rb2d;
 	private AudioSource source;
-	public AudioClip clip;
 	private List<AudioClip> listOfSounds;
 	private bool touchIsHappening = false;
-
 	private int degree;
 	private float scalePixel = 0.0007f;
 	private int deltaDegree = 2;
 	private int collected = 0;
 
-	// Use this for initialization
+	// Initialization
 	void Start () 
 	{
 		rb2d = GetComponent<Rigidbody2D> ();
