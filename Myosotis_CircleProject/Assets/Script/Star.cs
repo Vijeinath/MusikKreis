@@ -21,7 +21,7 @@ public class Star: MonoBehaviour {
 	private AudioSource source;
 	public AudioClip clip;
 	private List<AudioClip> listOfSounds;
-	public bool touchIsHappening = false;
+	private bool touchIsHappening = false;
 
 	private int degree;
 	private float scalePixel = 0.0007f;
@@ -170,6 +170,10 @@ public class Star: MonoBehaviour {
 			color = "orange";
 		}
 		GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_"+spriteName.Split('_') [2]);
+	}
+
+	public bool isTouched(){
+		return touchIsHappening;
 	}
 
 }

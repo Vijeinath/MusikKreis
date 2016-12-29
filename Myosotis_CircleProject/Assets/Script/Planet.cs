@@ -14,7 +14,7 @@ public class Planet: MonoBehaviour {
 	public bool galaxyAppeared = false;
 	public bool hitByStar = false;
 	public int rounds = 0;
-	public bool touchIsHappening = false;
+	private bool touchIsHappening = false;
 	private Sprite[] planetSprites;
 
 	private void OnEnable()
@@ -74,7 +74,6 @@ public class Planet: MonoBehaviour {
 		this.transform.position = new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius);
 		if ((degree  + degreeDelta) == 90) {
 			rounds++;
-			print ("rounds");
 		}
 		degree = (degree + degreeDelta) %360;
 	}
@@ -85,5 +84,8 @@ public class Planet: MonoBehaviour {
 		}
 	}
 
+	public bool isTouched(){
+		return touchIsHappening;
+	}
 
 }

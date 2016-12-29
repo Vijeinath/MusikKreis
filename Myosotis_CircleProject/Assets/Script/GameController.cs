@@ -12,13 +12,14 @@ public class GameController : MonoBehaviour {
 	public Star star4;
 	public Planet planet;
 	public Galaxy galaxy;
+	public int planetCycle;
+	public int numberOfCollactables;
 
 	private List<AudioClip>[] audioSource;
 	private AudioSource source;
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
 	private int randomInt = -1;
-	private readonly int numberOfCollactables = 10;
 
 	private DateTime startTime;
 	private bool galaxyStarted = false;
@@ -104,11 +105,13 @@ public class GameController : MonoBehaviour {
 				(Mathf.Abs((tempVector.magnitude - star4.transform.position.magnitude)) < 0.2)){
 				tempVector = new Vector2(UnityEngine.Random.Range(-2.8f,2.8f),UnityEngine.Random.Range(-1.4f,1.4f));
 			}
+			/*
 			print ("star1:" + Mathf.Abs((tempVector.magnitude - star1.transform.position.magnitude)));
 			print ("star2:" + Mathf.Abs((tempVector.magnitude - star2.transform.position.magnitude)));
 			print ("star3:" + Mathf.Abs((tempVector.magnitude - star3.transform.position.magnitude)));
 			print ("star4:" + Mathf.Abs((tempVector.magnitude - star4.transform.position.magnitude)));
 			print (tempVector.magnitude);
+			*/
 			collectables [i].transform.position = tempVector;
 			collectables [i].SetActive (false);
 		}
@@ -121,7 +124,6 @@ public class GameController : MonoBehaviour {
 			collectables [i].SetActive (true);
 			yield return new WaitWhile(()=> createCollectable.isPlaying);
 			//yield return new WaitForSeconds(0.1F);
-			print ("fertig");
 		}
 	}
 
@@ -161,13 +163,17 @@ public class GameController : MonoBehaviour {
 			star4.galaxyAppeared = true;
 			galaxyStarted = true;
 
-
-			if ((!star1.isCollisionOutside()|| star1.touchIsHappening) && (!star2.isCollisionOutside() || star2.touchIsHappening) && (!star3.isCollisionOutside()||star3.touchIsHappening) && (!star4.isCollisionOutside()||star4.touchIsHappening)) {
+			bool isStar1Inside = !star1.isCollisionOutside() || star1.isTouched();
+			bool isStar2Inside = !star2.isCollisionOutside() || star2.isTouched();
+			bool isStar3Inside = !star3.isCollisionOutside() || star3.isTouched();
+			bool isStar4Inside = !star4.isCollisionOutside() || star4.isTouched();
+			if (isStar1Inside && isStar2Inside && isStar3Inside && isStar4Inside) {
 				galaxy.SetActive (true);
 			}
+
 			if (galaxyStarted) {
 				TimeSpan durationGalaxy = DateTime.Now - startTime;
-				if (/*durationGalaxy.Seconds > 30*/ planet.rounds == 1) {
+				if (/*durationGalaxy.Seconds > 30*/ planet.rounds == planetCycle) {
 					star1.ResetCollected ();
 					star2.ResetCollected ();
 					star3.ResetCollected ();
