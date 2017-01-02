@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
 	public Star star4;
 	public Planet planet;
 	public Galaxy galaxy;
+	public OuterSpace outerSpace;
 	public int planetCycle;
 	public int numberOfCollactables;
 
@@ -137,6 +138,18 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		//Testing
+		if (star1.isTouched ()) {
+			print ("star1 touched");
+		}
+
+		//Testing
+		/*
+		if (outerSpace.IsPressed()) {
+			print ("galaxy touched");
+		}
+		*/
+
 		if (planet.hitByStar){
 			ChangeStarColor();
 			ShuffleStarMusic ();

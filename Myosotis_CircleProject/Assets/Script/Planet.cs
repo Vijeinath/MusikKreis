@@ -42,13 +42,8 @@ public class Planet: MonoBehaviour {
 	void HandleTransformCompleted (object sender, EventArgs e)
 	{	
 		touchIsHappening = false;
-
 	}
-
-	private void ChangePlanet(string fileName){
-		int number = (Int32.Parse(fileName.Split ('_') [1])) % 4;
-		this.GetComponent<SpriteRenderer> ().sprite = planetSprites [number];
-	}
+		
 	// Use this for initialization
 	void Start () {
 		planetSprites = new Sprite[4];
@@ -89,6 +84,11 @@ public class Planet: MonoBehaviour {
 
 	public bool isTouched(){
 		return touchIsHappening;
+	}
+
+	private void ChangePlanet(string fileName){
+		int number = (Int32.Parse(fileName.Split ('_') [1])) % 4;
+		this.GetComponent<SpriteRenderer> ().sprite = planetSprites [number];
 	}
 
 }
