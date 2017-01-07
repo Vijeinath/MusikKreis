@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour {
 
 	// Private attributes
 	private List<AudioClip>[] audioSource;
-	private AudioSource source;
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
 	private int randomInt = -1;
@@ -45,7 +44,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		DeactivateGalaxy ();
 		LoadSoundFiles ();
-		ShuffleStarMusic ();
+		RandomInstrumentMusic ();
 
 		collectables = new List<GameObject> ();
 		for (int i = 0; i < numberOfCollactables; i++) {
@@ -138,25 +137,14 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		//Testing
-		if (star1.isTouched ()) {
-			print ("star1 touched");
-		}
-
-		//Testing
-		/*
-		if (outerSpace.IsPressed()) {
-			print ("galaxy touched");
-		}
-		*/
-
 		if (planet.hitByStar){
-			ChangeStarColor();
-			ShuffleStarMusic ();
+			//ChangeStarColor();
+			RandomInstrumentMusic ();
 			planet.hitByStar = false;
 		}
 
 		if (!galaxy.IsAlive() && galaxyJustStopped) {
+			galaxy.SetActive (false);
 			PositionCollectables();
 			StartCoroutine(ShowCollectables ());
 			galaxyJustStopped = false;
@@ -187,7 +175,7 @@ public class GameController : MonoBehaviour {
 
 			if (galaxyStarted) {
 				TimeSpan durationGalaxy = DateTime.Now - startTime;
-				if (/*durationGalaxy.Seconds > 30*/ planet.rounds == planetCycle) {
+				if (/*durationGalaxy.Seconds > 30*/ planet.Rounds == planetCycle) {
 					star1.ResetCollected ();
 					star2.ResetCollected ();
 					star3.ResetCollected ();
@@ -198,10 +186,9 @@ public class GameController : MonoBehaviour {
 					star2.galaxyAppeared = false;
 					star3.galaxyAppeared = false;
 					star4.galaxyAppeared = false;
-					galaxy.SetActive (false);
 					galaxy.Stop();
 					galaxyJustStopped = true;
-					planet.rounds = 0;
+					planet.Rounds = 0;
 				}
 			}
 		}
@@ -212,7 +199,7 @@ public class GameController : MonoBehaviour {
 		degree = (degree + degreeDelta) %360;
 	}
 
-	public void ShuffleStarMusic (){
+	public void RandomInstrumentMusic (){
 		var tempRandom = UnityEngine.Random.Range(0,7);
 		while (tempRandom == randomInt) {
 			tempRandom = UnityEngine.Random.Range(0,7);
@@ -233,46 +220,46 @@ public class GameController : MonoBehaviour {
 
 		switch (randomInt) {
 		case 0:
-			star1.clip = audioSource [piano] [tempArray [0]];
-			star2.clip = audioSource [piano] [tempArray [1]];
-			star3.clip = audioSource [piano] [tempArray [2]];
-			star4.clip = audioSource [piano] [tempArray [3]];
+			star1.Clip = audioSource [piano] [tempArray [0]];
+			star2.Clip = audioSource [piano] [tempArray [1]];
+			star3.Clip = audioSource [piano] [tempArray [2]];
+			star4.Clip = audioSource [piano] [tempArray [3]];
 			break;
 		case 1:
-			star1.clip = audioSource [guitar] [tempArray [0]];
-			star2.clip = audioSource [guitar] [tempArray [1]];
-			star3.clip = audioSource [guitar] [tempArray [2]];
-			star4.clip = audioSource [guitar] [tempArray [3]];
+			star1.Clip = audioSource [guitar] [tempArray [0]];
+			star2.Clip = audioSource [guitar] [tempArray [1]];
+			star3.Clip = audioSource [guitar] [tempArray [2]];
+			star4.Clip = audioSource [guitar] [tempArray [3]];
 			break;
 		case 2:
-			star1.clip = audioSource [xylophone] [tempArray [0]];
-			star2.clip = audioSource [xylophone] [tempArray [1]];
-			star3.clip = audioSource [xylophone] [tempArray [2]];
-			star4.clip = audioSource [xylophone] [tempArray [3]];
+			star1.Clip = audioSource [xylophone] [tempArray [0]];
+			star2.Clip = audioSource [xylophone] [tempArray [1]];
+			star3.Clip = audioSource [xylophone] [tempArray [2]];
+			star4.Clip = audioSource [xylophone] [tempArray [3]];
 			break;
 		case 3:
-			star1.clip = audioSource [flute] [tempArray [0]];
-			star2.clip = audioSource [flute] [tempArray [1]];
-			star3.clip = audioSource [flute] [tempArray [2]];
-			star4.clip = audioSource [flute] [tempArray [3]];
+			star1.Clip = audioSource [flute] [tempArray [0]];
+			star2.Clip = audioSource [flute] [tempArray [1]];
+			star3.Clip = audioSource [flute] [tempArray [2]];
+			star4.Clip = audioSource [flute] [tempArray [3]];
 			break;
 		case 4:
-			star1.clip = audioSource [harpe] [tempArray [0]];
-			star2.clip = audioSource [harpe] [tempArray [1]];
-			star3.clip = audioSource [harpe] [tempArray [2]];
-			star4.clip = audioSource [harpe] [tempArray [3]];
+			star1.Clip = audioSource [harpe] [tempArray [0]];
+			star2.Clip = audioSource [harpe] [tempArray [1]];
+			star3.Clip = audioSource [harpe] [tempArray [2]];
+			star4.Clip = audioSource [harpe] [tempArray [3]];
 			break;
 		case 5:
-			star1.clip = audioSource [trumpet] [tempArray [0]];
-			star2.clip = audioSource [trumpet] [tempArray [1]];
-			star3.clip = audioSource [trumpet] [tempArray [2]];
-			star4.clip = audioSource [trumpet] [tempArray [3]];
+			star1.Clip = audioSource [trumpet] [tempArray [0]];
+			star2.Clip = audioSource [trumpet] [tempArray [1]];
+			star3.Clip = audioSource [trumpet] [tempArray [2]];
+			star4.Clip = audioSource [trumpet] [tempArray [3]];
 			break;
 		case 6:
-			star1.clip = audioSource [saxophone] [tempArray [0]];
-			star2.clip = audioSource [saxophone] [tempArray [1]];
-			star3.clip = audioSource [saxophone] [tempArray [2]];
-			star4.clip = audioSource [saxophone] [tempArray [3]];
+			star1.Clip = audioSource [saxophone] [tempArray [0]];
+			star2.Clip = audioSource [saxophone] [tempArray [1]];
+			star3.Clip = audioSource [saxophone] [tempArray [2]];
+			star4.Clip = audioSource [saxophone] [tempArray [3]];
 			break;
 		default:
 			break;		

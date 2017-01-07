@@ -10,7 +10,6 @@ public class OuterSpace : MonoBehaviour {
 	private bool isPressed = false;
 	private int background = 1;
 	private int numberOfBackgrounds = 5;
-	//private Vector2 pressPosition;
 		
 	// Use this for initialization
 	void Start () {

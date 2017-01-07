@@ -2,11 +2,12 @@
 using System.Collections;
 
 public class Galaxy : MonoBehaviour {
-	// Public attribute
+	// Private attribute
 	public ParticleSystem galaxyParticle;
 
 	// Use this for initialization
 	void Start () {
+		//galaxyParticle = GetComponent<ParticleSystem> ();
 	}
 
 	// Update is called once per frame

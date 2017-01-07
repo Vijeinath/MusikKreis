@@ -6,42 +6,52 @@ using System;
 using System.Collections.Generic;
 
 public class Planet: MonoBehaviour {
-	//Public attributes
+	//Public attributes/ properties
 	public float RotationSpeed = 20f;
 	public bool galaxyAppeared = false;
 	public bool hitByStar = false;
-	public int rounds = 0;
-
+	public int Rounds
+	{
+		get
+		{
+			return rounds;
+		}
+		set 
+		{	
+			if (value >= 0) 
+			{
+				rounds = value;
+			}
+		}
+	}
+		
 	//Private attributes
+	private int rounds = 0;
 	private float degree = 90f;
 	private float degreeDelta = 0.25f;
 	private float radius = 2.5f;
-	private TransformGesture gesture;
-	private bool touchIsHappening = false;
+	private PressGesture gesture;
 	private Sprite[] planetSprites;
 
 	private void OnEnable()
 	{
-		gesture = GetComponent<TransformGesture> ();
-		gesture.TransformStarted += HandleTransformStarted;
-		gesture.TransformCompleted += HandleTransformCompleted;
+		gesture = GetComponent<PressGesture> ();
+		gesture.Pressed += PressHandler;
 	}
 
 	private void OnDisable()
 	{
-		gesture.TransformStarted -= HandleTransformStarted;
-		gesture.TransformCompleted -= HandleTransformCompleted;
+		gesture.Pressed -= PressHandler;
 	}
 
-	void HandleTransformStarted(object sender, EventArgs e)
+	private void ChangePlanet(string fileName){
+		int number = (Int32.Parse(fileName.Split ('_') [1])) % 4;
+		this.GetComponent<SpriteRenderer> ().sprite = planetSprites [number];
+	}
+
+	void PressHandler(object sender, EventArgs e)
 	{
-		touchIsHappening = true;
 		ChangePlanet (this.GetComponent<SpriteRenderer>().sprite.name);
-	}
-
-	void HandleTransformCompleted (object sender, EventArgs e)
-	{	
-		touchIsHappening = false;
 	}
 		
 	// Use this for initialization
@@ -62,13 +72,9 @@ public class Planet: MonoBehaviour {
 	}
 
 	void Fixed(){
-		if (touchIsHappening) {
-			Vector2 targetPosition = Camera.main.ScreenToWorldPoint (new Vector2 (gesture.ScreenPosition.x, gesture.ScreenPosition.y));
-			transform.position = targetPosition;
-		}
 	}
 
-	void Orbit(){
+	private void Orbit(){
 		this.transform.position = new Vector2 (Mathf.Cos (degree * Mathf.PI / 180)*radius,Mathf.Sin (degree * Mathf.PI / 180)*radius);
 		if ((degree  + degreeDelta) == 90) {
 			rounds++;
@@ -80,15 +86,6 @@ public class Planet: MonoBehaviour {
 		if (other.gameObject.tag == "Star") {
 			hitByStar = true;
 		}
-	}
-
-	public bool isTouched(){
-		return touchIsHappening;
-	}
-
-	private void ChangePlanet(string fileName){
-		int number = (Int32.Parse(fileName.Split ('_') [1])) % 4;
-		this.GetComponent<SpriteRenderer> ().sprite = planetSprites [number];
 	}
 
 }

@@ -6,13 +6,18 @@ using System;
 using System.Collections.Generic;
 
 public class Star: MonoBehaviour {
-	//Public attributes
-	public ParticleSystem trailParticle;
-	public AudioClip sound;
+	//Public attributes/ properties
 	public bool galaxyAppeared = false;
-	public AudioClip clip;
+	public AudioClip Clip
+	{
+		set
+		{
+			clip = value;
+		}
+	}
 
 	//Private attributes
+	private ParticleSystem trailParticle;
 	private Vector3 startPoint = new Vector3 (0.3f, 0.3f);
 	private float circleRadius = 1.4f;
 	private TransformGesture gesture;
@@ -24,6 +29,7 @@ public class Star: MonoBehaviour {
 	private float scalePixel = 0.0007f;
 	private int deltaDegree = 2;
 	private int collected = 0;
+	private AudioClip clip;
 
 	// Initialization
 	void Start () 
@@ -33,9 +39,10 @@ public class Star: MonoBehaviour {
 		listOfSounds = new List<AudioClip> ();
 		LoadAudioClips (listOfSounds);
 		degree = UnityEngine.Random.Range(0,360);
+		trailParticle = GetComponent<ParticleSystem> ();
 	}
 
-	public virtual void LoadAudioClips(List<AudioClip> listOfSounds){
+	public void LoadAudioClips(List<AudioClip> listOfSounds){
 		listOfSounds.Add (Resources.Load("Sound/2cuteBells") as AudioClip);
 		listOfSounds.Add (Resources.Load("Sound/belltree2") as AudioClip);
 		listOfSounds.Add (Resources.Load("Explosion/explosion02") as AudioClip);
@@ -104,7 +111,6 @@ public class Star: MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 
 		if ((touchIsHappening) && !isCollisionOutside()) {
-			
 		}
 	
 		if ((other.gameObject.tag == "Galaxy")&& !touchIsHappening && isCollisionOutside()){
@@ -113,9 +119,10 @@ public class Star: MonoBehaviour {
 			source.PlayOneShot(clip, 1F);
 		}
 		if (other.gameObject.tag == "Collectable") {
-			other.gameObject.SetActive (false);
+			//source.PlayOneShot(listOfSounds[0], 1F);
+			source.PlayOneShot(other.gameObject.GetComponent<Collectable>().Collected,1F);
 			collected++;
-			source.PlayOneShot(listOfSounds[0], 1F);
+			other.gameObject.SetActive (false);
 		}
 
 		if (other.gameObject.tag == "Planet") {
