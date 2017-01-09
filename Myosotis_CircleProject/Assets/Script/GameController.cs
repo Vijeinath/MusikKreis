@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
 	public OuterSpace outerSpace;
 	public int planetCycle;
 	public int numberOfCollactables;
+	public bool starColorChange;
 
 	// Private attributes
 	private List<AudioClip>[] audioSource;
@@ -106,13 +107,6 @@ public class GameController : MonoBehaviour {
 				(Mathf.Abs((tempVector.magnitude - star4.transform.position.magnitude)) < 0.2)){
 				tempVector = new Vector2(UnityEngine.Random.Range(-2.8f,2.8f),UnityEngine.Random.Range(-1.4f,1.4f));
 			}
-			/*
-			print ("star1:" + Mathf.Abs((tempVector.magnitude - star1.transform.position.magnitude)));
-			print ("star2:" + Mathf.Abs((tempVector.magnitude - star2.transform.position.magnitude)));
-			print ("star3:" + Mathf.Abs((tempVector.magnitude - star3.transform.position.magnitude)));
-			print ("star4:" + Mathf.Abs((tempVector.magnitude - star4.transform.position.magnitude)));
-			print (tempVector.magnitude);
-			*/
 			collectables [i].transform.position = tempVector;
 			collectables [i].SetActive (false);
 		}
@@ -138,7 +132,9 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (planet.hitByStar){
-			//ChangeStarColor();
+			if (starColorChange) {
+				ChangeStarColor();
+			}
 			RandomInstrumentMusic ();
 			planet.hitByStar = false;
 		}

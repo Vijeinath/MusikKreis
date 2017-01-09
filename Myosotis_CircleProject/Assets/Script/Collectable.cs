@@ -13,24 +13,13 @@ public class Collectable : MonoBehaviour {
 			return collected;
 		}
 	}
-
-	public AudioClip Created
-	{
-		get
-		{
-			return created;
-		}
-	}
-
+		
 	// Private attributes
-	private AudioClip created;
 	private AudioClip collected;
 
 	// Initialization
 	void Start () {
-		created = new AudioClip ();
 		collected = new AudioClip ();
-		created = Resources.Load("Sound/create01") as AudioClip;
 		collected = Resources.Load("Sound/2cuteBells") as AudioClip;
 	}
 	

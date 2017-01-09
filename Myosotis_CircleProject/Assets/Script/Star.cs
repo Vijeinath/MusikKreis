@@ -173,7 +173,7 @@ public class Star: MonoBehaviour {
 		} else {
 			color = "orange";
 		}
-		GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/starshine_"+color+"_"+spriteName.Split('_') [2]);
+		GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("Sprites/star_"+color+"_"+spriteName.Split('_') [2]);
 	}
 
 	public bool isTouched(){
