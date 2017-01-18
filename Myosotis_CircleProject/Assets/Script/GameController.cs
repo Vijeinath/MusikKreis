@@ -8,8 +8,8 @@ using System.Collections.Generic;
 */
 public class GameController : MonoBehaviour {
 	// Public attributes
-	public ParticleSystem createCollectable;
 	public GameObject prefabCollectable;
+	public GameObject prefabCollectableParticle;
 	public Star star1;
 	public Star star2;
 	public Star star3;
@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
 	public bool starColorChange;
 
 	// Private attributes
+	private ParticleSystem createParticle;
 	private List<AudioClip>[] audioSource;
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
@@ -46,13 +47,17 @@ public class GameController : MonoBehaviour {
 		DeactivateGalaxy ();
 		LoadSoundFiles ();
 		RandomInstrumentMusic ();
+		InstantiateCollectables ();
+		PositionCollectables ();
+		StartCoroutine(ShowCollectables ());
+	}
 
+	private void InstantiateCollectables(){
 		collectables = new List<GameObject> ();
 		for (int i = 0; i < numberOfCollactables; i++) {
 			collectables.Add(Instantiate(prefabCollectable) as GameObject); 
-		}	
-		PositionCollectables ();
-		StartCoroutine(ShowCollectables ());
+		}
+		createParticle = (Instantiate(prefabCollectableParticle) as GameObject).GetComponent<ParticleSystem> ();
 	}
 		
 	private void DeactivateGalaxy(){
@@ -114,10 +119,10 @@ public class GameController : MonoBehaviour {
 
 	private IEnumerator ShowCollectables(){
 		for (int i = 0; i < numberOfCollactables; i++) {
-			createCollectable.transform.position = collectables [i].transform.position;
-			createCollectable.Play ();
+			createParticle.transform.position = collectables [i].transform.position;
+			createParticle.Play ();
 			collectables [i].SetActive (true);
-			yield return new WaitWhile(()=> createCollectable.isPlaying);
+			yield return new WaitWhile(()=> createParticle.isPlaying);
 			//yield return new WaitForSeconds(0.1F);
 		}
 	}

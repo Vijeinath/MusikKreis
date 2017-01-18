@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class Collectable : MonoBehaviour {
 	// Public attributes
-	public ParticleSystem collectableParticle;
 	public AudioClip Collected
 	{
 		get
@@ -27,7 +26,4 @@ public class Collectable : MonoBehaviour {
 	void Update () {
 	}
 
-	public void PlayParticle(){
-		collectableParticle.Play ();
-	}
 }
