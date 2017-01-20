@@ -27,7 +27,6 @@ public class GameController : MonoBehaviour {
 	private List<AudioClip> listOfSounds;
 	private List<GameObject> collectables;
 	private int randomInt = -1;
-	private DateTime startTime;
 	private bool galaxyStarted = false;
 	private bool galaxyJustStopped = false;
 	private int degree = 0;
@@ -123,7 +122,6 @@ public class GameController : MonoBehaviour {
 			createParticle.Play ();
 			collectables [i].SetActive (true);
 			yield return new WaitWhile(()=> createParticle.isPlaying);
-			//yield return new WaitForSeconds(0.1F);
 		}
 	}
 
@@ -154,10 +152,6 @@ public class GameController : MonoBehaviour {
 		DrawGalaxy ();
 		int sum = star1.GetCollectedNumber () + star2.GetCollectedNumber () + star3.GetCollectedNumber () + star4.GetCollectedNumber ();
 		if (sum == numberOfCollactables) {
-			if (!galaxyStarted) {
-				startTime = DateTime.Now;
-			}
-				
 			galaxy.Play ();
 			planet.galaxyAppeared = true;
 			star1.galaxyAppeared = true;
@@ -175,8 +169,7 @@ public class GameController : MonoBehaviour {
 			}
 
 			if (galaxyStarted) {
-				TimeSpan durationGalaxy = DateTime.Now - startTime;
-				if (/*durationGalaxy.Seconds > 30*/ planet.Rounds == planetCycle) {
+				if (planet.Rounds == planetCycle) {
 					star1.ResetCollected ();
 					star2.ResetCollected ();
 					star3.ResetCollected ();

@@ -8,7 +8,7 @@ public class OuterSpace : MonoBehaviour {
 	private LongPressGesture lPressG;
 	private bool isPressed = false;
 	private int background = 1;
-	private int numberOfBackgrounds = 5;
+	private int numberOfBackgrounds = 2;
 		
 	// Use this for initialization
 	void Start () {
